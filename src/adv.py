@@ -1,6 +1,8 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
+
+player = Player('Nate')
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -37,6 +39,9 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+
+# print(f"Player name: {player.name} \nCurrent Room: {player.current_room}")
+# print(player.current_room.n_to)
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
@@ -49,3 +54,23 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+player.current_room = room['outside']
+while True:
+
+    print(f"{player.name} approaches the {player.current_room.name}...")
+    print(player.current_room.description)
+
+    if player.current_room == room['outside']:
+        cmd = input("-> Type [n] to Walk north:  ")
+        if cmd == 'n':
+            player.current_room = room['foyer']
+    if player.current_room == room['foyer']:
+        print(f"{player.name} walks into the {player.current_room.name}...\n")
+        print(f"{player.current_room.description}\n")
+        print(
+            f"To the north is the the {player.current_room.n_to.name}.\nTo the south is the {player.current_room.s_to.name}.\nTo the east is the {player.current_room.e_to.name}.\n")
+        print("Which way way will he go?\n")
+        cmd = input(
+            "-> Type [n] to walk north  [e] to walk east  [s] to walk south [q] to quit ")
+    if cmd == "q":
+        break
