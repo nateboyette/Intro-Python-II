@@ -14,7 +14,8 @@ class Room:
 
         self.items = items
 
-    def add_items(self, items):
+    def add_items_to_room(self, items):
+        self.items = []
         if len(items) == 1:
             items.append(items[0])
         else:
@@ -33,9 +34,18 @@ class Room:
             moves.append('w')
         return ", ".join(moves)
 
+    def get_items(self):
+        room_items = []
+        for item in self.items:
+            room_items.append(item.name)
+        return ", ".join(room_items)
+
     def __str__(self):
         room_msg = f"\n{self.name}\n\n"
         room_msg += f"{self.description}\n\n"
+
         if len(self.possible_moves()) > 0:
-            room_msg += f"The possible moves are: {self.possible_moves()}"
+            room_msg += f"The possible moves are: {self.possible_moves()}\n\n"
+        if len(self.items) > 0:
+            room_msg += f"You can see a {self.get_items()}"
         return room_msg
