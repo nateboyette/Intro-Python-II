@@ -1,8 +1,8 @@
 from room import Room
 from player import Player
+from item import Item
 # Declare all the rooms
 
-player = Player('Nate')
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -23,6 +23,19 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+outsideItems = [
+    Item(name="skull", description="Looks like it could be human"),
+    Item(name="key", description="An old long key"),
+    Item(name="letter", description="A letter that reads. 'It is done. No one will find it now.'"),
+]
+
+foyerItems = [
+    Item(name="knife", description="A rusty knife"),
+    Item(name="flashlight",
+         description="A flickering flashlight. The battery may be going dead."),
+    Item(name="pen", description="A dusty pen")
+]
+
 
 # Link rooms together
 
@@ -34,6 +47,24 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+
+# Add items to rooms
+# room['outside'].add_items(outsideItems)
+# room['foyer'].add_items(foyerItems)
+
+# room['outside'].possible_moves()
+# room['foyer'].possible_moves()
+
+# print('\n***OUTSIDE ITEMS***')
+# for item in room['outside'].items:
+#     print(item)
+
+# print('\n***Foyer ITEMS***')
+# for item in room['foyer'].items:
+#     print(item)
+
+# print(room['outside'].items)
 
 #
 # Main
@@ -54,23 +85,50 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-player.current_room = room['outside']
+
+
+player = Player('Nate', room['outside'])
+
 while True:
 
-    print(f"{player.name} approaches the {player.current_room.name}...")
-    print(player.current_room.description)
+    # print(f"\n{player.name} approaches the {player.current_room.name}...")
 
     if player.current_room == room['outside']:
-        cmd = input("-> Type [n] to Walk north:  ")
+        print(player.current_room)
+        cmd = input("\n\n-> Type 'n' to head into the Foyer:  ")
         if cmd == 'n':
             player.current_room = room['foyer']
+        elif cmd != 'n' or cmd != 'q':
+            print("**Please input 'n' to head into the Foyer. Or 'q' to quit.**")
     if player.current_room == room['foyer']:
-        print(f"{player.name} walks into the {player.current_room.name}...\n")
-        print(f"{player.current_room.description}\n")
-        print(
-            f"To the north is the the {player.current_room.n_to.name}.\nTo the south is the {player.current_room.s_to.name}.\nTo the east is the {player.current_room.e_to.name}.\n")
+        print(f"\n{player.name} walks into the {player.current_room.name}...\n")
+        print(f"{player.current_room}\n")
+        # print(
+        #     f"To the north is the the {player.current_room.n_to.name}.\nTo the south is the {player.current_room.s_to.name}.\nTo the east is the {player.current_room.e_to.name}.\n")
         print("Which way way will he go?\n")
-        cmd = input(
-            "-> Type [n] to walk north  [e] to walk east  [s] to walk south [q] to quit ")
+        cmd = input("What will he do: ")
+        if cmd == 'n':
+            player.current_room = player.current_room.n_to
+        elif cmd == 's':
+            player.current_room = player.current_room.s_to
+        elif cmd == 'e':
+            player.current_room = player.current_room.e_to
+    if player.current_room == room['overlook']:
+        print(player.current_room)
+        cmd = input("What will he do: ")
+        if cmd == 's':
+            player.current_room = player.current_room.s_to
+    if player.current_room == room['narrow']:
+        print(player.current_room)
+        cmd = input("What will he do: ")
+        if cmd == 'w':
+            player.current_room = player.current_room.w_to
+        elif cmd == 'n':
+            player.current_room = player.current_room.n_to
+    if player.current_room == room['treasure']:
+        print(player.current_room)
+        cmd = input("What will he do: ")
+        if cmd == 's':
+            player.current_room = player.current_room.s_to
     if cmd == "q":
         break

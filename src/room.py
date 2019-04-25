@@ -1,9 +1,10 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
+from item import Item
 
 
 class Room:
-    def __init__(self, name, description):
+    def __init__(self, name, description, items=[]):
         self.name = name
         self.description = description
         self.n_to = None
@@ -11,5 +12,30 @@ class Room:
         self.e_to = None
         self.w_to = None
 
+        self.items = items
+
+    def add_items(self, items):
+        if len(items) == 1:
+            items.append(items[0])
+        else:
+            for item in items:
+                self.items.append(item)
+
+    def possible_moves(self):
+        moves = []
+        if self.n_to is not None:
+            moves.append('n')
+        if self.s_to is not None:
+            moves.append('s')
+        if self.e_to is not None:
+            moves.append('e')
+        if self.w_to is not None:
+            moves.append('w')
+        return ", ".join(moves)
+
     def __str__(self):
-        return f"'{self.name}: {self.description}'"
+        room_msg = f"\n{self.name}\n\n"
+        room_msg += f"{self.description}\n\n"
+        if len(self.possible_moves()) > 0:
+            room_msg += f"The possible moves are: {self.possible_moves()}"
+        return room_msg
