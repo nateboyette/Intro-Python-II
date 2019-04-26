@@ -111,13 +111,13 @@ while True:
         print(player.current_room)
 
         cmd = input(
-            "\n\n-> Type 'n' to head into the Foyer or 'a' to pickup an item:  ")
+            "\n\n-> Commands:\n[n]: Go north into the foyer\n[get/take: item]: To add an item to your inventory\n[i]: To view inventory\n[q]: Quit\n-> ")
 
         player.player_action(cmd)
 
     if player.current_room == room['foyer']:
 
-        print(f"\n{player.name} walks into the {player.current_room.name}...\n")
+        # print(f"\n{player.name} walks into the {player.current_room.name}...\n")
 
         print(f"{player.current_room}\n")
         print(

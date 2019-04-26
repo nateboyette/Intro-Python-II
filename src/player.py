@@ -91,7 +91,7 @@ class Player:
         if 'take' in player_input:
             self.get_item(player_input)
         if 'drop' in player_input:
-            print('drop')
+            self.drop_item(player_input)
         if input in directions:
             self.player_move(input)
         if 'i' in player_input:
