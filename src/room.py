@@ -22,6 +22,19 @@ class Room:
             for item in items:
                 self.items.append(item)
 
+    def return_item_to_room(self, item):
+        self.items.append(item)
+        print(f"{item.name} returned to room")
+
+    def remove_item_from_room(self, item):
+        for i in self.items:
+            if item == i.name:
+                self.items.remove(i)
+                print(f"{item} removed from {self.name}")
+                break
+            else:
+                print(f"Item not found")
+
     def possible_moves(self):
         moves = []
         if self.n_to is not None:

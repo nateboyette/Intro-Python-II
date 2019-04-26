@@ -45,7 +45,7 @@ overlookItems = [
 
 narrowItems = [
     Item(name='book', description="An old book with notes scribbled in it."),
-    Item(name='gold coin', description="A small gold coin")
+    Item(name='coin', description="A small gold coin")
 
 ]
 
@@ -96,59 +96,53 @@ room['treasure'].s_to = room['narrow']
 
 
 player = Player('Nate', room['outside'])
+room['outside'].add_items_to_room(outsideItems)
+room['foyer'].add_items_to_room(foyerItems)
+room['overlook'].add_items_to_room(overlookItems)
+room['narrow'].add_items_to_room(narrowItems)
+
 
 while True:
 
     # print(f"\n{player.name} approaches the {player.current_room.name}...")
-
+    directions = ['n', 'e', 'w', 's']
     if player.current_room == room['outside']:
-
-        # adds item to current room
-        player.current_room.add_items_to_room(outsideItems)
 
         print(player.current_room)
 
-        cmd = input("\n\n-> Type 'n' to head into the Foyer:  ")
+        cmd = input(
+            "\n\n-> Type 'n' to head into the Foyer or 'a' to pickup an item:  ")
 
-        player.player_move(cmd)
+        player.player_action(cmd)
 
     if player.current_room == room['foyer']:
-
-        # adds item to current room
-        player.current_room.add_items_to_room(foyerItems)
 
         print(f"\n{player.name} walks into the {player.current_room.name}...\n")
 
         print(f"{player.current_room}\n")
-
         print(
             f"To the north is the the {player.current_room.n_to.name}.\nTo the south is the {player.current_room.s_to.name}.\nTo the east is the {player.current_room.e_to.name}.\n")
 
         cmd = input("Which way way will he go?: ")
 
         # calls function to move player to the next room
-        player.player_move(cmd)
+        player.player_action(cmd)
 
     if player.current_room == room['overlook']:
-
-        # adds item to current room
-        player.current_room.add_items_to_room(overlookItems)
 
         print(player.current_room)
 
         cmd = input("What will he do: ")
 
-        player.player_move(cmd)
+        player.player_action(cmd)
 
     if player.current_room == room['narrow']:
-
-        player.current_room.add_items_to_room(narrowItems)
 
         print(player.current_room)
 
         cmd = input("\nWhat will he do: ")
 
-        player.player_move(cmd)
+        player.player_action(cmd)
 
     if player.current_room == room['treasure']:
 
@@ -156,7 +150,7 @@ while True:
 
         cmd = input("What will he do: ")
 
-        player.player_move(cmd)
+        player.player_action(cmd)
 
     if cmd == "q":
         break
